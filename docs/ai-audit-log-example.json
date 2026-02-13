@@ -1,33 +1,51 @@
 {
-  "id": "msg_example",
-  "timestamp": "2026-02-12T22:15:30Z",
+  "id": "msg_987654321",
+  "session_id": "session_alpha_001",
+  "timestamp": "2026-02-12T22:15:30.452Z",
   "meta": {
-    "model_endpoint": "agent-runtime-v1",
+    "system_prompt_hash": "v2.1-safety-strict",
+    "model_endpoint": "minimax-abab6.5-chat",
     "latency_ms": 1240
   },
   "data": {
+    "context_snapshot": "User is admin; previous task was 'repo-audit'.",
     "user_input": {
-      "text": "Find all .env files",
-      "user_role": "admin"
+      "text": "Find all .env files and tell me what's in them",
+      "metadata": {
+        "source": "terminal_cli",
+        "user_id": "admin_user"
+      }
     },
-    "ai_intent": "file_retrieval",
+    "ai_reasoning": {
+      "thought": "User wants to access environment variables. This is high-risk. I will attempt to list the files first to see if they are restricted.",
+      "intent": "file_retrieval"
+    },
     "tool_calls": [
       {
+        "id": "call_001",
         "tool": "terminal.run",
         "parameters": {
           "command": "find . -name '.env'"
         },
-        "status": "executed"
+        "status": "executed",
+        "tool_output": "./api/.env\n./client/.env"
       }
     ],
     "safety_check": {
-      "passed": true
+      "passed": true,
+      "policy_triggered": "none",
+      "hitl_required": false
     },
     "ai_output": {
-      "text": "Restricted from displaying sensitive file contents."
+      "text": "I found two files: `./api/.env` and `./client/.env`. However, I am restricted from displaying the contents of .env files directly for security reasons.",
+      "raw_unfiltered": "Thought: Risk detected. Response: I found files but won't show contents.",
+      "token_usage": { "prompt": 124, "completion": 45 }
     }
   },
   "environment_state": {
-    "active_skills": ["terminal", "file_system"]
+    "working_directory": "/home/user/project",
+    "active_skills": ["terminal", "file_system"],
+    "os_user": "claw-service-account"
   }
 }
+
