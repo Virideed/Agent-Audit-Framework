@@ -1,0 +1,33 @@
+{
+  "id": "msg_example",
+  "timestamp": "2026-02-12T22:15:30Z",
+  "meta": {
+    "model_endpoint": "agent-runtime-v1",
+    "latency_ms": 1240
+  },
+  "data": {
+    "user_input": {
+      "text": "Find all .env files",
+      "user_role": "admin"
+    },
+    "ai_intent": "file_retrieval",
+    "tool_calls": [
+      {
+        "tool": "terminal.run",
+        "parameters": {
+          "command": "find . -name '.env'"
+        },
+        "status": "executed"
+      }
+    ],
+    "safety_check": {
+      "passed": true
+    },
+    "ai_output": {
+      "text": "Restricted from displaying sensitive file contents."
+    }
+  },
+  "environment_state": {
+    "active_skills": ["terminal", "file_system"]
+  }
+}
